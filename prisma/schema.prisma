@@ -1,0 +1,77 @@
+// Schema local de CodealeAI: proveedores, modelos con precios y registros de uso.
+// La base SQLite (prisma/dev.db) contiene API keys en texto plano: está en .gitignore.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Provider {
+  id           String        @id @default(cuid())
+  name         String
+  slug         String        @unique
+  // Formato de request/stream: "anthropic" | "openai" (openai = compatible con chat/completions)
+  protocol     String
+  baseUrl      String
+  // Texto plano, solo uso local
+  apiKey       String?
+  // Cómo se envía la key: header (ej. "x-api-key" o "Authorization") y esquema opcional (ej. "Bearer")
+  authHeader   String        @default("Authorization")
+  authScheme   String?       @default("Bearer")
+  // JSON con headers extra (ej. {"anthropic-version":"2023-06-01"})
+  extraHeaders String?
+  // Límite de tokens de salida que se pide en cada request
+  maxTokens    Int           @default(4096)
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  models       Model[]
+  usage        UsageRecord[]
+}
+
+model Model {
+  id                String        @id @default(cuid())
+  providerId        String
+  provider          Provider      @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  // Id que se envía al proveedor
+  apiModelId        String
+  displayName       String
+  // Precio por millón de tokens
+  inputPricePerMTok  Float        @default(0)
+  outputPricePerMTok Float        @default(0)
+  currency          String        @default("USD")
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  usage             UsageRecord[]
+
+  @@unique([providerId, apiModelId])
+}
+
+// Solo métricas relevantes: nada de contenido de mensajes.
+// Los costos se calculan y guardan al momento de la petición para que
+// cambiar precios después no reescriba el historial.
+model UsageRecord {
+  id           String   @id @default(cuid())
+  providerId   String
+  provider     Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  modelId      String
+  model        Model    @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  inputTokens  Int
+  outputTokens Int
+  inputCost    Float
+  outputCost   Float
+  totalCost    Float
+  latencyMs    Int?
+  // "success" | "error" (HTTP/red) | "aborted" (el usuario detuvo la respuesta)
+  status       String   @default("success")
+  createdAt    DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([providerId, modelId])
+}
