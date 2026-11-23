@@ -4,7 +4,6 @@ FROM node:24-bookworm-slim
 ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /app
 
-# pnpm (versión fijada en package.json) y toolchain por si better-sqlite3 necesita compilarse
 RUN corepack enable \
  && apt-get update \
  && apt-get install -y --no-install-recommends python3 make g++ \
@@ -15,13 +14,16 @@ RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-# Cliente de Prisma y build. Se usa una base temporal solo para compilar.
+# Variables públicas que se incrustan en el build (si las usas)
+ARG NEXT_PUBLIC_SITE_URL
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
+
+# Cliente de Prisma y build con una base temporal, que se elimina después
 RUN DATABASE_URL="file:/tmp/build.db" pnpm db:generate \
  && DATABASE_URL="file:/tmp/build.db" pnpm exec prisma migrate deploy \
  && DATABASE_URL="file:/tmp/build.db" pnpm build \
  && rm -f /tmp/build.db
 
-# La base de datos (con las API keys) vive en un volumen, nunca dentro de la imagen
 ENV NODE_ENV=production \
     DATABASE_URL="file:/data/codeale.db" \
     PORT=3000 \
@@ -29,5 +31,5 @@ ENV NODE_ENV=production \
 VOLUME /data
 EXPOSE 3000
 
-# Aplica migraciones, carga proveedores de ejemplo (idempotente) y arranca
-CMD ["sh", "-c", "pnpm exec prisma migrate deploy && pnpm db:seed && pnpm start -H 0.0.0.0"]
+# exec reemplaza sh por node, para que reciba las señales de apagado
+CMD ["sh", "-c", "pnpm exec prisma migrate deploy && pnpm db:seed && exec pnpm start -H 0.0.0.0"]
