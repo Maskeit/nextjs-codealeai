@@ -56,7 +56,7 @@ pnpm start
 | `pnpm db:migrate` | Aplica las migraciones |
 | `pnpm db:seed` | Carga proveedores y modelos de ejemplo (no pisa tus claves ni precios) |
 | `pnpm db:studio` | Abre Prisma Studio para ver la base |
-
+| `pnpm exec prisma migrate reset` | Reset completo (borra todo, rehace las tablas y corre el seed) ideal para limpiar la bd |
 ## Problemas comunes
 
 - **Error con `better-sqlite3` al instalar:** faltan las herramientas de compilación nativas; instálalas y repite `pnpm install`.
