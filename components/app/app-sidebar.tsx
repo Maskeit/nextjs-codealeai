@@ -3,9 +3,11 @@
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
-import logo from "/public/codeale_logo.webp"
+import logo1 from "/public/codeale-logo-b.svg"
+import logo2 from "/public/codeale-logo-n.svg"
 import {
   ChartColumnIcon,
+  InfoIcon,
   MessageSquarePlusIcon,
   MessagesSquareIcon,
   SettingsIcon,
@@ -32,6 +34,7 @@ const navigation = [
   { href: "/", labelKey: "nav.chat", icon: MessagesSquareIcon },
   { href: "/results", labelKey: "nav.results", icon: ChartColumnIcon },
   { href: "/config", labelKey: "nav.config", icon: SettingsIcon },
+  { href: "/advice", labelKey: "nav.advice", icon: InfoIcon },
 ]
 
 export function AppSidebar() {
@@ -55,13 +58,17 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <div className="flex items-center gap-2 px-0 py-1.5">
-          <div className="flex size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground">
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-lg text-sidebar-primary-foreground">
+            {/* Negro en modo claro, blanco en modo oscuro (clase "dark" de ThemeProvider) */}
             <Image
-              src={logo}
+              src={logo2}
               alt={t("nav.brand")}
-              width={30}
-              height={30}
-              className="h-6 w-6"
+              className="size-8 object-contain dark:hidden"
+            />
+            <Image
+              src={logo1}
+              alt={t("nav.brand")}
+              className="hidden size-8 object-contain dark:block"
             />
           </div>
           <span className="text-sm font-semibold group-data-[collapsible=icon]:hidden">

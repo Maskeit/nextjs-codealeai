@@ -9,7 +9,8 @@
     "new_chat_title": "New chat",
     "delete_chat": "Delete chat: {title}",
     "delete_chat_confirm": "Delete \"{title}\" and all its history?",
-    "brand": "Codeale AI"
+    "brand": "Codeale AI",
+    "advice": "Notice of use"
   },
   "chat": {
     "title": "How Can I Help You Today?",
@@ -197,5 +198,38 @@
     "language_es": "Español",
     "language_en": "English",
     "dark_mode": "Dark mode"
+  },
+  "advice": {
+    "title": "Notice of use",
+    "subtitle": "Please read this before using the app.",
+    "back_to_chat": "Back to chat",
+    "demo": {
+      "title": "This site is a demo",
+      "body": "The hosted version is for demonstration only. It has no API keys, neither mine nor anyone else's, and you should not enter your own keys here. To use the chat with your own keys, install the project on your local machine."
+    },
+    "install": {
+      "title": "Install it locally",
+      "body": "Clone the repository, install the dependencies and run it on your machine. Your keys will then stay on your computer.",
+      "github": "View on GitHub"
+    },
+    "purpose": {
+      "title": "What this app is for",
+      "body": "Codeale AI is a tool for testing and comparing different APIs, API keys and models side by side: their answers, latency, token usage and cost."
+    },
+    "not_a_chat": {
+      "title": "It is not a general-purpose chat",
+      "body": "It is not meant to replace existing chat applications. If it seems to lack features you would expect from a chat, that is by design: its purpose is to compare APIs, not to be a full chat experience."
+    },
+    "privacy": {
+      "title": "Your data and your API keys",
+      "server": "The hosted demo does not store any data on a server, and I have no access to your chats or your keys.",
+      "local": "When you run the app locally, everything is stored in the local SQLite database of your machine: your API keys, chats and usage history.",
+      "keys": "Your API keys are only used to send your requests to the provider you configured. They are never sent back to the browser and are never shared with anyone else.",
+      "control": "You are the only one with access to your keys, and you can clear or delete them whenever you want from Configuration."
+    },
+    "responsibility": {
+      "title": "Your responsibility",
+      "body": "Requests are billed by each provider to your own account. Use keys with spending limits whenever possible and delete them when you no longer need them."
+    }
   }
 }

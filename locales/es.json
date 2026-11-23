@@ -9,7 +9,8 @@
     "new_chat_title": "Nuevo chat",
     "delete_chat": "Eliminar chat: {title}",
     "delete_chat_confirm": "¿Eliminar \"{title}\" y todo su historial?",
-    "brand": "Codeale AI"
+    "brand": "Codeale AI",
+    "advice": "Aviso de uso"
   },
   "chat": {
     "title": "¿En qué puedo ayudarte hoy?",
@@ -197,5 +198,38 @@
     "language_es": "Español",
     "language_en": "English",
     "dark_mode": "Modo oscuro"
+  },
+  "advice": {
+    "title": "Aviso de uso",
+    "subtitle": "Lee esto antes de usar la aplicación.",
+    "back_to_chat": "Volver al chat",
+    "demo": {
+      "title": "Este sitio es una demostración",
+      "body": "La versión alojada es solo para demostración. No tiene API keys, ni mías ni de nadie, y no debes ingresar tus propias claves aquí. Para usar el chat con tus claves, instala el proyecto en tu máquina local."
+    },
+    "install": {
+      "title": "Instálalo en local",
+      "body": "Clona el repositorio, instala las dependencias y ejecútalo en tu máquina. Así tus claves se quedan en tu computadora.",
+      "github": "Ver en GitHub"
+    },
+    "purpose": {
+      "title": "Para qué sirve esta app",
+      "body": "Codeale AI es una herramienta para probar y comparar distintas APIs, API keys y modelos lado a lado: sus respuestas, latencia, uso de tokens y costo."
+    },
+    "not_a_chat": {
+      "title": "No es un chat de propósito general",
+      "body": "No pretende reemplazar las aplicaciones de chat que ya existen. Si parece que le faltan funciones que esperarías de un chat, es a propósito: su función es comparar APIs, no ser una experiencia de chat completa."
+    },
+    "privacy": {
+      "title": "Tus datos y tus API keys",
+      "server": "La demo alojada no almacena ningún dato en un servidor, y yo no tengo acceso a tus chats ni a tus claves.",
+      "local": "Al ejecutar la app en local, todo se guarda en la base de datos SQLite de tu máquina: tus API keys, chats e historial de uso.",
+      "keys": "Tus API keys solo se usan para enviar tus solicitudes al proveedor que configuraste. Nunca vuelven al navegador y nunca se comparten con nadie más.",
+      "control": "Solo tú tienes acceso a tus claves y puedes borrarlas cuando quieras desde Configuración."
+    },
+    "responsibility": {
+      "title": "Tu responsabilidad",
+      "body": "Cada proveedor factura las solicitudes a tu propia cuenta. Usa claves con límite de gasto siempre que sea posible y elimínalas cuando ya no las necesites."
+    }
   }
 }
